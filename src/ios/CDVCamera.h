@@ -43,9 +43,9 @@ enum CDVMediaType {
 typedef NSUInteger CDVMediaType;
 
 enum CDVVideoQuality {
-    High = 0,
-    Medium,
-    Low
+    VideoQualityHigh = 0,
+    VideoQualityMedium,
+    VideoQualityLow
 };
 typedef NSUInteger CDVVideoQuality;
 

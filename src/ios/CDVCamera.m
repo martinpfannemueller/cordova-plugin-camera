@@ -64,23 +64,24 @@ static NSString* toBase64(NSData* data) {
     CDVPictureOptions* pictureOptions = [[CDVPictureOptions alloc] init];
 
     pictureOptions.quality = [command argumentAtIndex:0 withDefault:@(50)];
-    pictureOptions.destinationType = [[command argumentAtIndex:1 withDefault:@(DestinationTypeFileUri)] unsignedIntegerValue];
-    pictureOptions.sourceType = [[command argumentAtIndex:2 withDefault:@(UIImagePickerControllerSourceTypeCamera)] unsignedIntegerValue];
+    pictureOptions.videoQuality = [command argumentAtIndex:1 withDefault:@(VideoQualityHigh)];
+    pictureOptions.destinationType = [[command argumentAtIndex:2 withDefault:@(DestinationTypeFileUri)] unsignedIntegerValue];
+    pictureOptions.sourceType = [[command argumentAtIndex:3 withDefault:@(UIImagePickerControllerSourceTypeCamera)] unsignedIntegerValue];
 
-    NSNumber* targetWidth = [command argumentAtIndex:3 withDefault:nil];
-    NSNumber* targetHeight = [command argumentAtIndex:4 withDefault:nil];
+    NSNumber* targetWidth = [command argumentAtIndex:4 withDefault:nil];
+    NSNumber* targetHeight = [command argumentAtIndex:5 withDefault:nil];
     pictureOptions.targetSize = CGSizeMake(0, 0);
     if ((targetWidth != nil) && (targetHeight != nil)) {
         pictureOptions.targetSize = CGSizeMake([targetWidth floatValue], [targetHeight floatValue]);
     }
 
-    pictureOptions.encodingType = [[command argumentAtIndex:5 withDefault:@(EncodingTypeJPEG)] unsignedIntegerValue];
-    pictureOptions.mediaType = [[command argumentAtIndex:6 withDefault:@(MediaTypePicture)] unsignedIntegerValue];
-    pictureOptions.allowsEditing = [[command argumentAtIndex:7 withDefault:@(NO)] boolValue];
-    pictureOptions.correctOrientation = [[command argumentAtIndex:8 withDefault:@(NO)] boolValue];
-    pictureOptions.saveToPhotoAlbum = [[command argumentAtIndex:9 withDefault:@(NO)] boolValue];
-    pictureOptions.popoverOptions = [command argumentAtIndex:10 withDefault:nil];
-    pictureOptions.cameraDirection = [[command argumentAtIndex:11 withDefault:@(UIImagePickerControllerCameraDeviceRear)] unsignedIntegerValue];
+    pictureOptions.encodingType = [[command argumentAtIndex:6 withDefault:@(EncodingTypeJPEG)] unsignedIntegerValue];
+    pictureOptions.mediaType = [[command argumentAtIndex:7 withDefault:@(MediaTypePicture)] unsignedIntegerValue];
+    pictureOptions.allowsEditing = [[command argumentAtIndex:8 withDefault:@(NO)] boolValue];
+    pictureOptions.correctOrientation = [[command argumentAtIndex:9 withDefault:@(NO)] boolValue];
+    pictureOptions.saveToPhotoAlbum = [[command argumentAtIndex:10 withDefault:@(NO)] boolValue];
+    pictureOptions.popoverOptions = [command argumentAtIndex:11 withDefault:nil];
+    pictureOptions.cameraDirection = [[command argumentAtIndex:12 withDefault:@(UIImagePickerControllerCameraDeviceRear)] unsignedIntegerValue];
 
     pictureOptions.popoverSupported = NO;
     pictureOptions.usesGeolocation = NO;

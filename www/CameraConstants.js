@@ -65,7 +65,7 @@ module.exports = {
      * @enum {number}
      */
     VideoQuality: {
-        High: 0,
+        HIGH: 0,
         MEDIUM: 1,
         LOW: 2
     },
