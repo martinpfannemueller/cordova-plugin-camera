@@ -42,9 +42,17 @@ enum CDVMediaType {
 };
 typedef NSUInteger CDVMediaType;
 
+enum CDVVideoQuality {
+    High = 0,
+    Medium,
+    Low
+};
+typedef NSUInteger CDVVideoQuality;
+
 @interface CDVPictureOptions : NSObject
 
 @property (strong) NSNumber* quality;
+@property (assign) CDVVideoQuality videoQuality;
 @property (assign) CDVDestinationType destinationType;
 @property (assign) UIImagePickerControllerSourceType sourceType;
 @property (assign) CGSize targetSize;

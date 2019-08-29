@@ -46,6 +46,13 @@ interface Camera {
 interface CameraOptions {
     /** Picture quality in range 0-100. Default is 50 */
     quality?: number;
+    /** Video quality 
+     * Defined in navigator.camera.VideoQuality. Default is MEDIUM.
+     *      HIGH : 0,
+     *      MEDIUM : 1,
+     *      LOW : 2
+     */
+    videoQuality?: number;
     /**
      * Choose the format of the return value.
      * Defined in navigator.camera.DestinationType. Default is FILE_URI.
@@ -146,6 +153,11 @@ declare class CameraPopoverOptions implements CameraPopoverOptions {
 
 declare var Camera: {
     // Camera constants, defined in Camera plugin
+    VideoQuality: {
+        LOW: number;
+        MEDIUM: number;
+        HIGH: number;
+    }
     DestinationType: {
         DATA_URL: number;
         FILE_URI: number;

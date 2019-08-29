@@ -64,6 +64,7 @@ for (var key in Camera) {
  * @typedef module:camera.CameraOptions
  * @type {Object}
  * @property {number} [quality=50] - Quality of the saved image, expressed as a range of 0-100, where 100 is typically full resolution with no loss from file compression. (Note that information about the camera's resolution is unavailable.)
+ * @property {module:Camera.VideoQuality} [videoQuality=MEDIUM] - Choose the format of the return value.
  * @property {module:Camera.DestinationType} [destinationType=FILE_URI] - Choose the format of the return value.
  * @property {module:Camera.PictureSourceType} [sourceType=CAMERA] - Set the source of the picture.
  * @property {Boolean} [allowEdit=false] - Allow simple editing of image before selection.
@@ -137,6 +138,7 @@ cameraExport.getPicture = function (successCallback, errorCallback, options) {
     var getValue = argscheck.getValue;
 
     var quality = getValue(options.quality, 50);
+    var videoQuality = getValue(options.videoQuality, Camera.VideoQuality.MEDIUM);
     var destinationType = getValue(options.destinationType, Camera.DestinationType.FILE_URI);
     var sourceType = getValue(options.sourceType, Camera.PictureSourceType.CAMERA);
     var targetWidth = getValue(options.targetWidth, -1);
@@ -149,7 +151,7 @@ cameraExport.getPicture = function (successCallback, errorCallback, options) {
     var popoverOptions = getValue(options.popoverOptions, null);
     var cameraDirection = getValue(options.cameraDirection, Camera.Direction.BACK);
 
-    var args = [quality, destinationType, sourceType, targetWidth, targetHeight, encodingType,
+    var args = [quality, videoQuality, destinationType, sourceType, targetWidth, targetHeight, encodingType,
         mediaType, allowEdit, correctOrientation, saveToPhotoAlbum, popoverOptions, cameraDirection];
 
     exec(successCallback, errorCallback, 'Camera', 'takePicture', args);

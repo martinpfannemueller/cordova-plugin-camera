@@ -62,6 +62,14 @@ module.exports = {
         ALLMEDIA: 2
     },
     /**
+     * @enum {number}
+     */
+    VideoQuality: {
+        High: 0,
+        MEDIUM: 1,
+        LOW: 2
+    },
+    /**
      * @description
      * Defines the output format of `Camera.getPicture` call.
      * _Note:_ On iOS passing `PictureSourceType.PHOTOLIBRARY` or `PictureSourceType.SAVEDPHOTOALBUM`

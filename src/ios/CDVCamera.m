@@ -762,9 +762,11 @@ static NSString* toBase64(NSData* data) {
         cameraPicker.cameraDevice = pictureOptions.cameraDirection;
     } else if (pictureOptions.mediaType == MediaTypeAll) {
         cameraPicker.mediaTypes = [UIImagePickerController availableMediaTypesForSourceType:cameraPicker.sourceType];
+        cameraPicker.videoQuality = cameraPicker.videoQuality;
     } else {
         NSArray* mediaArray = @[(NSString*)(pictureOptions.mediaType == MediaTypeVideo ? kUTTypeMovie : kUTTypeImage)];
         cameraPicker.mediaTypes = mediaArray;
+        cameraPicker.videoQuality = cameraPicker.videoQuality;
     }
 
     return cameraPicker;
