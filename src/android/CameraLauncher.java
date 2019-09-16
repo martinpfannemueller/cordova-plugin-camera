@@ -107,6 +107,7 @@ public class CameraLauncher extends CordovaPlugin implements MediaScannerConnect
     private static final String TIME_FORMAT = "yyyyMMdd_HHmmss";
 
     private int mQuality;                   // Compression quality hint (0-100: 0=low quality & high compression, 100=compress of max quality)
+    private int mVideoQuality;              // Video quality enum with three values (2 being the lowest quality)
     private int targetWidth;                // desired width of the image
     private int targetHeight;               // desired height of the image
     private CordovaUri imageUri;            // Uri of captured image
@@ -158,16 +159,17 @@ public class CameraLauncher extends CordovaPlugin implements MediaScannerConnect
             this.mQuality = 50;
 
             //Take the values from the arguments if they're not already defined (this is tricky)
-            this.destType = args.getInt(1);
-            this.srcType = args.getInt(2);
+            this.destType = args.getInt(2);
+            this.srcType = args.getInt(3);
+            this.mVideoQuality = args.getInt(1);
             this.mQuality = args.getInt(0);
-            this.targetWidth = args.getInt(3);
-            this.targetHeight = args.getInt(4);
-            this.encodingType = args.getInt(5);
-            this.mediaType = args.getInt(6);
-            this.allowEdit = args.getBoolean(7);
-            this.correctOrientation = args.getBoolean(8);
-            this.saveToPhotoAlbum = args.getBoolean(9);
+            this.targetWidth = args.getInt(4);
+            this.targetHeight = args.getInt(5);
+            this.encodingType = args.getInt(6);
+            this.mediaType = args.getInt(7);
+            this.allowEdit = args.getBoolean(8);
+            this.correctOrientation = args.getBoolean(9);
+            this.saveToPhotoAlbum = args.getBoolean(10);
 
             // If the user specifies a 0 or smaller width/height
             // make it -1 so later comparisons succeed
@@ -397,6 +399,20 @@ public class CameraLauncher extends CordovaPlugin implements MediaScannerConnect
             title = GET_VIDEO;
             intent.setAction(Intent.ACTION_GET_CONTENT);
             intent.addCategory(Intent.CATEGORY_OPENABLE);
+            // Map iOS-based quality levels to Android
+            int videoQuality = 0;
+            switch(this.mVideoQuality){
+                case 0:
+                    videoQuality = 2;
+                    break;
+                case 1:
+                    videoQuality = 1;
+                    break;
+                case 2:
+                    videoQuality = 0;
+                    break;
+            }
+            intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, videoQuality);
         } else if (this.mediaType == ALLMEDIA) {
             // I wanted to make the type 'image/*, video/*' but this does not work on all versions
             // of android so I had to go with the wildcard search.
@@ -1336,6 +1352,7 @@ public class CameraLauncher extends CordovaPlugin implements MediaScannerConnect
         state.putInt("destType", this.destType);
         state.putInt("srcType", this.srcType);
         state.putInt("mQuality", this.mQuality);
+        state.putInt("mVideoQuality", this.mVideoQuality);
         state.putInt("targetWidth", this.targetWidth);
         state.putInt("targetHeight", this.targetHeight);
         state.putInt("encodingType", this.encodingType);
@@ -1360,6 +1377,7 @@ public class CameraLauncher extends CordovaPlugin implements MediaScannerConnect
         this.destType = state.getInt("destType");
         this.srcType = state.getInt("srcType");
         this.mQuality = state.getInt("mQuality");
+        this.mVideoQuality = state.getInt("mVideoQuality");
         this.targetWidth = state.getInt("targetWidth");
         this.targetHeight = state.getInt("targetHeight");
         this.encodingType = state.getInt("encodingType");
