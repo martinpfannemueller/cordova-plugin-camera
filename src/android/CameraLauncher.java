@@ -372,6 +372,21 @@ public class CameraLauncher extends CordovaPlugin implements MediaScannerConnect
         Intent intent = new Intent();
         String title = GET_PICTURE;
         croppedUri = null;
+
+        // Map iOS-based quality levels to Android
+        int videoQuality = 0;
+        switch(this.mVideoQuality){
+            case 0:
+                videoQuality = 1;
+                break;
+            case 1:
+                videoQuality = 1;
+                break;
+            case 2:
+                videoQuality = 0;
+                break;
+        }
+
         if (this.mediaType == PICTURE) {
             intent.setType("image/*");
             if (this.allowEdit) {
@@ -399,19 +414,6 @@ public class CameraLauncher extends CordovaPlugin implements MediaScannerConnect
             title = GET_VIDEO;
             intent.setAction(Intent.ACTION_GET_CONTENT);
             intent.addCategory(Intent.CATEGORY_OPENABLE);
-            // Map iOS-based quality levels to Android
-            int videoQuality = 0;
-            switch(this.mVideoQuality){
-                case 0:
-                    videoQuality = 2;
-                    break;
-                case 1:
-                    videoQuality = 1;
-                    break;
-                case 2:
-                    videoQuality = 0;
-                    break;
-            }
             intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, videoQuality);
         } else if (this.mediaType == ALLMEDIA) {
             // I wanted to make the type 'image/*, video/*' but this does not work on all versions
@@ -420,6 +422,7 @@ public class CameraLauncher extends CordovaPlugin implements MediaScannerConnect
             title = GET_All;
             intent.setAction(Intent.ACTION_GET_CONTENT);
             intent.addCategory(Intent.CATEGORY_OPENABLE);
+            intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, videoQuality);
         }
         if (this.cordova != null) {
             this.cordova.startActivityForResult((CordovaPlugin) this, Intent.createChooser(intent,
